@@ -1,0 +1,22 @@
+{
+    "files.associations": {
+<<<<<<< HEAD
+        "iostream": "cpp",
+        "ostream": "cpp",
+        "thread": "cpp"
+=======
+        "new": "cpp",
+        "iostream": "cpp",
+        "bitset": "cpp",
+        "chrono": "cpp",
+        "complex": "cpp",
+        "future": "cpp",
+        "limits": "cpp",
+        "memory": "cpp",
+        "thread": "cpp",
+        "type_traits": "cpp",
+        "valarray": "cpp",
+        "random": "cpp"
+>>>>>>> 243e56e92d75d2b74052469530cc41d454e52ef5
+    }
+}
