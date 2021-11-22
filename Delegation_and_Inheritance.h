@@ -79,4 +79,105 @@ public:
 };
 //composite
 //prototype
+//让未来派生的子类自己创造一个原型(静态对象)，让框架(父类可以看到)可以看到
+//框架配合虚函数
+enum imageType
+{
+    LSAT,SPOT
+};//定义一个枚举类型，只能等于LSAT或者SPOT
+//Base
+class Image
+{
+private:
+    static vector<Image*>_prototypes;
+    static int _nextSlot;
+public:
+    virtual void draw() = 0;//打印出这是子类的第几个对象
+    static Image *findAndClone(imageType type);
+    //用静态的子类原型调用父类的函数进行克隆
+    protected:
+        virtual imageType returnType() = 0;//得到Type名称
+        virtual Image* clone() = 0;//要求子类能够以原型克隆自己
+        static void addPrototype(Image* image)
+        {
+            _prototypes.push_back(image);
+            _nextSlot = _prototypes.size();
+        }
+};
+vector<Image*> Image::_prototypes;//类外初始化
+int Image:: _nextSlot;
+Image* Image::findAndClone(imageType type)
+{
+    for(int i = 0;i < _nextSlot;i++)
+    {
+        if(_prototypes[i]->returnType() == type)
+        {
+            return _prototypes[i]->clone();
+        }
+    }
+}
+//子类1
+class LandSatImage: public Image
+{
+private:
+    static LandSatImage _landSatImage;//静态的自己
+    LandSatImage()
+    {
+        addPrototype(this);
+    }
+    int _id;
+    static int _count;
+public:
+    imageType returnType()
+    {
+        return LSAT;
+    }
+    void draw()
+    {
+        cout << "LandSatImage::draw" << _id << endl;
+    }
+    Image* clone()
+    {
+        return new LandSatImage(1);
+    }
+protected:
+    LandSatImage(int dummy)
+    {
+        _id = _count++;
+    }
+};
+LandSatImage LandSatImage :: _landSatImage;
+int LandSatImage :: _count = 1;
+//子类2
+class SpotImage: public Image
+{
+private:
+    static SpotImage _spotImage;
+    int _id;
+    static int _count;
+    SpotImage()
+    {
+        addPrototype(this);
+    }
+public:
+    imageType returnType()
+    {
+        return SPOT;
+    }
+    void draw()
+    {
+        cout << "SpotImage::draw" << _id << endl;
+    }
+    Image* clone()
+    {
+        return new SpotImage(1);
+    }
+protected:
+    SpotImage(int dummy)
+    {
+        _id = _count++;
+    }
+};
+int SpotImage::_count = 1;
+SpotImage SpotImage::_spotImage;
 #endif

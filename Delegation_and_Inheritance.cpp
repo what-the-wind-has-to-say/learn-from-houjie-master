@@ -14,8 +14,28 @@ int test_observer()
     subj.set_val(6);
     return 0;
 }
+const int NUM_IMAGES = 8;
+vector<imageType>input = {LSAT,LSAT,LSAT,SPOT,LSAT,SPOT,SPOT,LSAT};
+int test_prototype()
+{
+    Image* images[NUM_IMAGES];
+    for(int i = 0;i < NUM_IMAGES;i++)
+    {
+        images[i] = Image::findAndClone(input[i]);
+    }
+    for(int i = 0;i < NUM_IMAGES;i++)
+    {
+        images[i]->draw();
+    }
+    for(int i = 0;i < NUM_IMAGES;i++)
+    {
+        delete images[i];
+    }
+    return 0;
+}
 int main()
 {
-    test_observer();
+    //test_observer();
+    test_prototype();
     return 0;
 }
