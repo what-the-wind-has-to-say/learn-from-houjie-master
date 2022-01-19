@@ -1,3 +1,5 @@
+#include<bits/stdc++.h>
+using namespace std;
 //STL六大部件
 //容器(Containers)
 //分配器(Allocators)
@@ -26,3 +28,4 @@ int main()
 
     return 0;
 }
+
